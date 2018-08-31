@@ -1,4 +1,6 @@
 
 *.xcuserstate
+*xcdebugger*
+Pods/
 
 
