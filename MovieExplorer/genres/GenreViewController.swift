@@ -11,7 +11,7 @@ import UIKit
 class GenreViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    private var genres: [Genre] = [Genre(name: "TItle", id: 25), Genre(name: "Avaranges", id: 25)]
+    private var genres: [Genre] = [Genre(id: 25, name: "TItle"), Genre(id: 25, name: "Avaranges")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
