@@ -9,9 +9,9 @@
 import Foundation
 import RxSwift
 
-class Repository{
+class Repository<Element>{
     
-    func getGenres(for url: String) -> Observable<Resource>{
-        
+    func getGenres(for url: String) -> Observable<Resource<Element>>{
+        return nil!
     }
 }

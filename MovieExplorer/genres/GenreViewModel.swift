@@ -13,16 +13,16 @@ class GenreViewModel{
     fileprivate let url: String = "https://api.themoviedb.org/3/genre/movie/list?api_key=\(AppKeys.API_KEY)"
     let disposeBag = DisposeBag()
     
-    private func loadData(for url: String) -> Observable<Resource>
+    private func loadData(for url: String) -> Observable<Resource<[Genre]>>
     {
-        let observable = Observable<Resource>.create( { [unowned self] observer -> Disposable in
-            let res: Observable<Resource> = Repository().getGenres(for: url)
+        let observable = Observable<Resource<[Genre]>>.create( { [unowned self] observer -> Disposable in
+            let res: Observable<Resource<[Genre]>> = Repository<[Genre]>().getGenres(for: url)
             let disposable = res.subscribe(onNext: { it in
                 print("onNext for genre \(it)")
                 observer.onNext(it)
             }, onError: { error in
                 print("onError for genre \(error)")
-                observer.onNext(Resource(status: false, list: nil, message: error.localizedDescription))
+                observer.onNext(Resource<[Genre]>.error(msg: error.localizedDescription))
                 observer.onCompleted()
             }, onCompleted: {
                 observer.onCompleted()

@@ -12,27 +12,27 @@ import SwiftyJSON
 
 class NetworkService {
     
-    class func request(url: String) -> Resource{
+    class func request<E>(url: String, parse: @escaping (Data) throws ->  E) -> Resource<E>{
         
         let semaphore = DispatchSemaphore(value: 0)
         var request = URLRequest(url:URL(string: "\(url)")!)
         request.httpMethod = "GET"
 
-        var resource : Resource?
+        var resource : Resource<E>?
         Alamofire.request(request)
             .validate()
             .responseJSON{ response in
                 guard response.result.isSuccess else{
                     let err = "Error \(response.response?.statusCode) while request \(String(describing: response.result.error))"
-                    resource = Resource(status: false, list: nil, message: err)
+                    resource = Resource<E>.error(msg: err)
                     return
                 }
                 do {
-                    let result = try JSONDecoder().decode(GenreResponse.self, from: response.data!)
-                    //TODO init resource
+                    let result: E = try parse(response.data!)
+                    resource = Resource<E>.success(data: result)
                 } catch {
                     let err = "Error parsing for request \(error)"
-                    resource = Resource(status: false, list: nil, message: err)
+                    resource = Resource<E>.error(msg: err)
                 }
                 semaphore.signal()
                 

@@ -9,73 +9,82 @@
 import Foundation
 import RxSwift
 
+/**
+ Class binds network and storage requests
+ */
 class NetworkBoundSources<Element> {
     public typealias E = Element
+    private let disposeBag = DisposeBag()
+    private let url: String
+
+    init(url: String) {
+        self.url = url
+    }
     
-    private let result = Observable<Resource>.create({
-        
-    }).
+    private lazy var result: Observable<Resource<E>> = Observable<Resource<E>>.create({ observer -> Disposable in
+        let value: AnyObserver<Resource<E>> = observer
+        self.start(value)
+        return Disposables.create {
+            print("NetworkBoundSources disposed")
+        }
+    })
     
-//    init {
-//        result.value = Resource.loading(null)
-//        val dbSource = loadFromDatabase()
-//        result.addSource(dbSource) { data ->
-//            result.removeSource(dbSource)
-//            if (shouldLoadFromNetwork(data)) {
-//                fetchFromNetwork(dbSource)
-//            } else {
-//                result.addSource(dbSource) { newData -> result.setValue(Resource.success(newData)) }
-//            }
-//        }
-//    }
-//
-//    private fun fetchFromNetwork(dbSource: LiveData<T>) {
-//
-//    appExecutors.networkIO().execute {
-//
-//    try {
-//    val response = createNetworkCall().execute()
-//
-//    println("response is: $response")
-//
-//    when (response.isSuccessful) {
-//    true -> appExecutors.diskIO().execute {
-//    saveNetworkCallResult(response.body())
-//
-//    appExecutors.mainThread().execute {
-//    val newDbSource = loadFromDatabase()
-//    result.addSource(newDbSource) { newData ->
-//    result.removeSource(newDbSource)
-//    result.setValue(Resource.success(newData))
-//    }
-//    }
-//    }
-//
-//    false -> appExecutors.mainThread().execute {
-//    result.addSource(dbSource) { newData -> result.setValue(Resource.error(newData, Error(response.code(), response.message()))) }
-//    }
-//
-//    }
-//    } catch (exc: IOException) {
-//    System.err.println("Make sure your server ${BuildConfig.URL} is running.")
-//    appExecutors.mainThread().execute {
-//    result.addSource(dbSource) { newData -> result.setValue(Resource.error(newData, Error(503, "Service Unavailable."))) }
-//    }
-//    }
-//    }
-//    }
-//
-//    fun asLiveData(): LiveData<Resource<T>> = result
-//
-//    @WorkerThread
-//    protected abstract fun saveNetworkCallResult(data: T?)
-//
-//    @MainThread
-//    protected abstract fun shouldLoadFromNetwork(data: T?): Boolean
-//
-//    @MainThread
-//    protected abstract fun loadFromDatabase(): LiveData<T>
-//
-//    @WorkerThread
-//    protected abstract fun createNetworkCall(): Call<T>
+    
+    private func start(_ observer : AnyObserver<Resource<E>>){
+        observer.onNext(Resource.loading)
+        let dataSource = loadFromDatabase()
+        dataSource.subscribe(onNext: { [unowned self] item -> Void in
+            if self.shouldLoadFromNetwork(data: item){
+                self.fetchNetworkData(observer)
+            }else{
+                observer.onNext(Resource<E>.success(data: item))
+                observer.onCompleted()
+            }
+        }, onError: { error  in
+            print("NetworkBoundSources::start, onError happens")
+            observer.onError(error)
+        }, onCompleted: {
+            print("NetworkBoundSources::start, onCompleted")
+            observer.onCompleted()
+        }, onDisposed: {
+            print("NetworkBoundSources::start, onDisposed")
+        })
+    }
+    
+    /**
+     Fetches data from network
+     - Parameter observer: Observer
+     */
+    private func fetchNetworkData(_ observer: AnyObserver<Resource<E>>){
+        let parsing: ((Data) throws -> E) = { data in
+            return try self.parseData(data)
+        }
+        let result = NetworkService.request(url: url, parse: parsing)
+        // put operation into io thread
+        saveNetworkCallResult(data: result.data!)
+        observer.onNext(result)
+        observer.onCompleted()
+    }
+    
+    var asObservable: Observable<Resource<E>> {
+        get {
+            return result
+        }
+    }
+    
+    func parseData(_ data: Data) throws -> E{
+        fatalError("Need implement parseData")
+    }
+    
+    func saveNetworkCallResult(data: E?){
+        fatalError("Need implement saveNetworkCallResult")
+    }
+    
+    func shouldLoadFromNetwork(data: E?) -> Bool {
+        fatalError("Need implement shouldLoadFromNetwork")
+    }
+
+    func loadFromDatabase() -> Observable<E> {
+        fatalError("Need implement loadFromDatabase")
+    }
 }
