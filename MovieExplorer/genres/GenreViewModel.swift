@@ -10,13 +10,13 @@ import Foundation
 import RxSwift
 
 class GenreViewModel{
-    fileprivate let url: String = "https://api.themoviedb.org/3/genre/movie/list?api_key=\(AppKeys.API_KEY)"
+    fileprivate static let url: String = "https://api.themoviedb.org/3/genre/movie/list?api_key=\(AppKeys.API_KEY)"
     let disposeBag = DisposeBag()
     
-    private func loadData(for url: String) -> Observable<Resource<[Genre]>>
+    public func loadData() -> Observable<Resource<[Genre]>>
     {
         let observable = Observable<Resource<[Genre]>>.create( { [unowned self] observer -> Disposable in
-            let res: Observable<Resource<[Genre]>> = Repository<[Genre]>().getGenres(for: url)
+            let res: Observable<Resource<[Genre]>> = Repository<[Genre]>().getGenres(for: GenreViewModel.url)
             let disposable = res.subscribe(onNext: { it in
                 print("onNext for genre \(it)")
                 observer.onNext(it)
