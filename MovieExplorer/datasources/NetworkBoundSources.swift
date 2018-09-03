@@ -60,6 +60,11 @@ class NetworkBoundSources<Element> {
             return try self.parseData(data)
         }
         let result = NetworkService.request(url: url, parse: parsing)
+        guard result.data != nil else {
+            observer.onNext(Resource<E>.error(msg: "Data is nil"))
+            observer.onCompleted()
+            return
+        }
         // put operation into io thread
         saveNetworkCallResult(data: result.data!)
         observer.onNext(result)

@@ -10,14 +10,20 @@ import Foundation
 import RxSwift
 
 class Repository{
+    fileprivate static let movie_url = "https://api.themoviedb.org/3/discover/movie?api_key=\(AppKeys.API_KEY)"
+    fileprivate static let genre_url: String = "https://api.themoviedb.org/3/genre/movie/list?api_key=\(AppKeys.API_KEY)"
     
-    func getGenres(for url: String) -> Observable<Resource<[Genre]>>{
-        //        if Element.self  == [Genre].self {
-        //            let array = [Genre(id: 25, name: "TItle"), Genre(id: 25, name: "Avaranges")]
-        //            let el : Element = array as! Element
-        //            let success = Resource<Element>.success(data: el)
-        //            return Observable.just(success)
-        //        }
-        return NetworkBoundSourcesImp(url: url).asObservable
+    fileprivate static func composeMovieUrl(genreId: Int) -> String {
+        return "\(movie_url)&with_genres=\(genreId)"
     }
+    
+    func getGenres() -> Observable<Resource<[Genre]>>{
+        return NetworkBoundSourcesGenre(url: Repository.genre_url).asObservable
+    }
+    
+    func getMovies(_ genreId: Int) -> Observable<Resource<[Movie]>>{
+        let url = Repository.composeMovieUrl(genreId: genreId)
+        return NetworkBoundSourcesMovie(url: url).asObservable
+    }
+
 }

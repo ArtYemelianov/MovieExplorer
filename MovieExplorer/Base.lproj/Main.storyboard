@@ -80,22 +80,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VS0-Lc-EW5">
-                                <rect key="frame" x="166.5" y="323" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rcr-7m-UrC">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="movie_identifier" rowHeight="120" id="37e-HW-Iqk" customClass="MovieTableViewCell" customModule="MovieExplorer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="120"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="37e-HW-Iqk" id="mzG-aX-6fh">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ntp-YL-vqM">
+                                                    <rect key="frame" x="23" y="49.5" width="329" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ntp-YL-vqM" firstAttribute="leading" secondItem="mzG-aX-6fh" secondAttribute="leadingMargin" constant="8" id="HwI-N8-gR7"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ntp-YL-vqM" secondAttribute="trailing" constant="8" id="WP5-30-L0N"/>
+                                                <constraint firstItem="ntp-YL-vqM" firstAttribute="centerY" secondItem="mzG-aX-6fh" secondAttribute="centerY" id="xr1-e8-O8p"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="ntp-YL-vqM" id="HIs-Rf-Qwu"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="VS0-Lc-EW5" firstAttribute="centerX" secondItem="XMq-8a-EaS" secondAttribute="centerX" id="2iL-06-FIc"/>
-                            <constraint firstItem="VS0-Lc-EW5" firstAttribute="centerY" secondItem="XMq-8a-EaS" secondAttribute="centerY" id="Vdx-BJ-8eU"/>
+                            <constraint firstItem="rcr-7m-UrC" firstAttribute="top" secondItem="DVU-zf-QYP" secondAttribute="top" id="RLe-Sm-khC"/>
+                            <constraint firstItem="DVU-zf-QYP" firstAttribute="trailing" secondItem="rcr-7m-UrC" secondAttribute="trailing" id="ehe-tg-xHD"/>
+                            <constraint firstItem="rcr-7m-UrC" firstAttribute="leading" secondItem="DVU-zf-QYP" secondAttribute="leading" id="iJK-6p-lDz"/>
+                            <constraint firstItem="DVU-zf-QYP" firstAttribute="bottom" secondItem="rcr-7m-UrC" secondAttribute="bottom" id="shE-ga-RQ8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DVU-zf-QYP"/>
                     </view>
                     <connections>
-                        <outlet property="titleLabel" destination="VS0-Lc-EW5" id="OUM-qf-ldx"/>
+                        <outlet property="tableView" destination="rcr-7m-UrC" id="Lvi-sl-ibE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UbN-gs-cFW" userLabel="First Responder" sceneMemberID="firstResponder"/>

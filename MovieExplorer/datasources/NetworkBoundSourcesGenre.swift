@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import SwiftyJSON
 
-class NetworkBoundSourcesImp : NetworkBoundSources<[Genre]> {
+class NetworkBoundSourcesGenre : NetworkBoundSources<[Genre]> {
     
     override init(url: String) {
         super.init(url: url)
