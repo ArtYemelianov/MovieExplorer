@@ -9,15 +9,15 @@
 import Foundation
 import RxSwift
 
-class Repository<Element>{
+class Repository{
     
-    func getGenres(for url: String) -> Observable<Resource<Element>>{
-        if Element.self  == [Genre].self {
-            let array = [Genre(id: 25, name: "TItle"), Genre(id: 25, name: "Avaranges")]
-            let el : Element = array as! Element
-            let success = Resource<Element>.success(data: el)
-            return Observable.just(success)
-        }
-        return nil!
+    func getGenres(for url: String) -> Observable<Resource<[Genre]>>{
+        //        if Element.self  == [Genre].self {
+        //            let array = [Genre(id: 25, name: "TItle"), Genre(id: 25, name: "Avaranges")]
+        //            let el : Element = array as! Element
+        //            let success = Resource<Element>.success(data: el)
+        //            return Observable.just(success)
+        //        }
+        return NetworkBoundSourcesImp(url: url).asObservable
     }
 }

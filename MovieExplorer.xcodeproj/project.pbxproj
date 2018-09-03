@@ -26,6 +26,7 @@
 		4546446E213816DF0001A339 /* GenreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546446D213816DF0001A339 /* GenreViewController.swift */; };
 		45464471213817510001A339 /* GenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45464470213817510001A339 /* GenreTableViewCell.swift */; };
 		45464475213818BA0001A339 /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45464474213818BA0001A339 /* MovieViewController.swift */; };
+		4558ABEB213D54D200C25AD6 /* NetworkBoundSourcesImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558ABEA213D54D200C25AD6 /* NetworkBoundSourcesImp.swift */; };
 		9B714AA4E6F5F316C5514842 /* Pods_MovieExplorer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4937A612FAF462F0E9518C94 /* Pods_MovieExplorer.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		4546446D213816DF0001A339 /* GenreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreViewController.swift; sourceTree = "<group>"; };
 		45464470213817510001A339 /* GenreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTableViewCell.swift; sourceTree = "<group>"; };
 		45464474213818BA0001A339 /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
+		4558ABEA213D54D200C25AD6 /* NetworkBoundSourcesImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkBoundSourcesImp.swift; sourceTree = "<group>"; };
 		4937A612FAF462F0E9518C94 /* Pods_MovieExplorer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieExplorer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		745650FDFBBFE5FC9E97880D /* Pods-MovieExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieExplorer.release.xcconfig"; path = "Pods/Target Support Files/Pods-MovieExplorer/Pods-MovieExplorer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 				453D9EE421396DD40081401D /* Resource.swift */,
 				453D9EF5213985DB0081401D /* Reposirory.swift */,
 				453D9EF72139869F0081401D /* NetworkBoundSources.swift */,
+				4558ABEA213D54D200C25AD6 /* NetworkBoundSourcesImp.swift */,
 			);
 			path = datasources;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				4546446E213816DF0001A339 /* GenreViewController.swift in Sources */,
 				45464459213809ED0001A339 /* ViewController.swift in Sources */,
 				453D9EE521396DD40081401D /* Resource.swift in Sources */,
+				4558ABEB213D54D200C25AD6 /* NetworkBoundSourcesImp.swift in Sources */,
 				45464471213817510001A339 /* GenreTableViewCell.swift in Sources */,
 				453D9EE22139642E0081401D /* GenreViewModel.swift in Sources */,
 				45464457213809ED0001A339 /* AppDelegate.swift in Sources */,

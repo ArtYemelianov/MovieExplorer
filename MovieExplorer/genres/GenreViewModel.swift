@@ -16,7 +16,7 @@ class GenreViewModel{
     public func loadData() -> Observable<Resource<[Genre]>>
     {
         let observable = Observable<Resource<[Genre]>>.create( { [unowned self] observer -> Disposable in
-            let res: Observable<Resource<[Genre]>> = Repository<[Genre]>().getGenres(for: GenreViewModel.url)
+            let res: Observable<Resource<[Genre]>> = Repository().getGenres(for: GenreViewModel.url)
             let disposable = res.subscribe(onNext: { it in
                 print("onNext for genre \(it)")
                 observer.onNext(it)
