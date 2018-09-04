@@ -11,14 +11,17 @@ import RxSwift
 
 class GenreViewController: UIViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     private var genres: [Genre] = Array()
+    private var filtered: [Genre] = Array()
     private let model: GenreViewModel = GenreViewModel()
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 44
+        searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
         var observable : Observable<Resource<[Genre]>> = model.loadData()
@@ -42,6 +45,7 @@ class GenreViewController: UIViewController {
         if resourse.data != nil {
             genres.removeAll()
             genres.append(contentsOf: resourse.data!)
+            filtered = filterData(data: genres, pattern: searchBar.text ?? "")
             tableView.reloadData()
         }else if resourse.message != nil {
             print("Message error \(resourse.message!)")
@@ -69,13 +73,12 @@ class GenreViewController: UIViewController {
             //do nothing
         }
     }
-    
 }
 
 extension GenreViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return genres.count
+        return filtered.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,7 +93,7 @@ extension GenreViewController: UITableViewDataSource, UITableViewDelegate {
             cell.backgroundColor = UIColor.clear
         }
         
-        let genre  = genres[indexPath.row]
+        let genre  = filtered[indexPath.row]
         if let item = cell as? GenreTableViewCell {
             item.titleLabel.text = genre.name
         }
@@ -102,6 +105,13 @@ extension GenreViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+extension GenreViewController : UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filtered = filterData(data: genres, pattern: searchText)
+        tableView.reloadData()
+    }
+}
+
 extension GenreViewController {
     func UIColorFromRGB(rgbValue: UInt) -> UIColor {
         return UIColor(
@@ -110,5 +120,15 @@ extension GenreViewController {
             blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
             alpha: CGFloat(1.0)
         )
+    }
+    
+    /**
+     Filters data by specific pattern
+     */
+    fileprivate func filterData(data: [Genre], pattern: String) -> [Genre] {
+        return pattern.isEmpty ? data : data.filter({ item -> Bool in
+            return item.name.range(of: pattern, options: .caseInsensitive, range: nil, locale: nil) != nil
+            
+        })
     }
 }
