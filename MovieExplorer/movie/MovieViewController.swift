@@ -24,8 +24,8 @@ class MovieViewController: UIViewController {
         self.tableView.rowHeight = 44
         tableView.dataSource = self
         tableView.delegate = self
-        var observable : Observable<Resource<[Movie]>> = model.loadData(genre!.id)
-        var disposable = observable
+        let observable : Observable<Resource<[Movie]>> = model.loadData(genre!.id)
+        let disposable = observable
             .subscribeOn(AppExecutors.background)
             .observeOn(AppExecutors.main)
             .subscribe(onNext: {[weak self] item in

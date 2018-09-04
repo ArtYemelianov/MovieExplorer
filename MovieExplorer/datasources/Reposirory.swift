@@ -23,7 +23,7 @@ class Repository{
     
     func getMovies(_ genreId: Int) -> Observable<Resource<[Movie]>>{
         let url = Repository.composeMovieUrl(genreId: genreId)
-        return NetworkBoundSourcesMovie(url: url).asObservable
+        return NetworkBoundSourcesMovie(url: url, genre_id: genreId).asObservable
     }
 
 }

@@ -11,7 +11,10 @@ import RxSwift
 
 class NetworkBoundSourcesMovie : NetworkBoundSources<[Movie]> {
     
-    override init(url: String) {
+    let genre_id: Int
+    
+    init(url: String, genre_id: Int) {
+        self.genre_id = genre_id
         super.init(url: url)
     }
     
@@ -21,7 +24,11 @@ class NetworkBoundSourcesMovie : NetworkBoundSources<[Movie]> {
     }
     
     override func saveNetworkCallResult(data: [Movie]?){
-        //TODO store result in storage
+        guard data != nil else {
+            print("Error. Movie result is nil ")
+            return
+        }
+        DatabaseAPI.sharedInstance.saveMovies(data!)
     }
     
     override func shouldLoadFromNetwork(data: [Movie]?) -> Bool {
@@ -32,7 +39,9 @@ class NetworkBoundSourcesMovie : NetworkBoundSources<[Movie]> {
     }
     
     override func loadFromDatabase() -> Observable<[Movie]> {
-        let observable = Observable<[Movie]>.just(Array())
+        let allmovies = DatabaseAPI.sharedInstance.getMovies()
+        let movies = DatabaseAPI.sharedInstance.getMovies(genre_id: genre_id)
+        let observable = Observable<[Movie]>.just(movies)
         return observable
     }
 }

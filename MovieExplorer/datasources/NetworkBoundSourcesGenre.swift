@@ -22,7 +22,11 @@ class NetworkBoundSourcesGenre : NetworkBoundSources<[Genre]> {
     }
     
     override func saveNetworkCallResult(data: [Genre]?){
-        //TODO store result in storage
+        guard data != nil else {
+            print("Error. Genre result is nil ")
+            return
+        }
+        DatabaseAPI.sharedInstance.saveGenres(data!)
     }
     
     override func shouldLoadFromNetwork(data: [Genre]?) -> Bool {
@@ -33,7 +37,8 @@ class NetworkBoundSourcesGenre : NetworkBoundSources<[Genre]> {
     }
     
     override func loadFromDatabase() -> Observable<[Genre]> {
-        let array = [Genre(id: 25, name: "TItle"), Genre(id: 25, name: "Avaranges")]
+        //TODO let array = [Genre(id: 25, name: "TItle"), Genre(id: 25, name: "Avaranges")]
+        let list = DatabaseAPI.sharedInstance.getGenres()
         let observable = Observable<[Genre]>.just(Array())
         return observable
     }

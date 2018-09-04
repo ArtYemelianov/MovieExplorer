@@ -23,7 +23,7 @@ class NetworkService {
             .validate()
             .responseJSON{ response in
                 guard response.result.isSuccess else{
-                    let err = "Error \(response.response?.statusCode) while request \(String(describing: response.result.error))"
+                    let err = "Error \(response.response?.statusCode ?? -1 ) while request \(String(describing: response.result.error))"
                     resource = Resource<E>.error(msg: err)
                     return
                 }

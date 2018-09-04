@@ -20,4 +20,5 @@ enum JsonKeys: String, CodingKey {
     case backdrop_path
     case overview
     case release_date
+    case genre_ids
 }

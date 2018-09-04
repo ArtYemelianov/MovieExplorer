@@ -22,7 +22,6 @@ class GenreViewController: UIViewController {
         super.viewDidLoad()
         self.tableView.rowHeight = 44
         
-        
         // Setup the Search Controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -33,8 +32,8 @@ class GenreViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        var observable : Observable<Resource<[Genre]>> = model.loadData()
-        var disposable = observable
+        let observable : Observable<Resource<[Genre]>> = model.loadData()
+        let disposable = observable
             .subscribeOn(AppExecutors.background)
             .observeOn(AppExecutors.main)
             .subscribe(onNext: {[weak self] item in
