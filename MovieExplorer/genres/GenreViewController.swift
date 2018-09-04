@@ -11,17 +11,26 @@ import RxSwift
 
 class GenreViewController: UIViewController {
     
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     private var genres: [Genre] = Array()
     private var filtered: [Genre] = Array()
     private let model: GenreViewModel = GenreViewModel()
     private let disposeBag = DisposeBag()
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 44
-        searchBar.delegate = self
+        
+        
+        // Setup the Search Controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Genres"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        searchController.searchBar.delegate = self
+        
         tableView.dataSource = self
         tableView.delegate = self
         var observable : Observable<Resource<[Genre]>> = model.loadData()
@@ -45,7 +54,7 @@ class GenreViewController: UIViewController {
         if resourse.data != nil {
             genres.removeAll()
             genres.append(contentsOf: resourse.data!)
-            filtered = filterData(data: genres, pattern: searchBar.text ?? "")
+            filtered = filterData(data: genres, pattern: searchController.searchBar.text ?? "")
             tableView.reloadData()
         }else if resourse.message != nil {
             print("Message error \(resourse.message!)")
@@ -109,6 +118,12 @@ extension GenreViewController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filtered = filterData(data: genres, pattern: searchText)
         tableView.reloadData()
+    }
+}
+
+extension GenreViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filtered = filterData(data: genres, pattern: searchController.searchBar.text ?? "")
     }
 }
 

@@ -22,14 +22,9 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wHx-pz-szJ">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" id="ADh-W9-SsP">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="genre_identifier" rowHeight="120" id="0wY-qC-Hqw" customClass="GenreTableViewCell" customModule="MovieExplorer" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="375" height="120"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0wY-qC-Hqw" id="8Vd-cr-qI3">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
@@ -70,7 +65,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="hgV-tI-3GV"/>
                     <connections>
-                        <outlet property="searchBar" destination="ADh-W9-SsP" id="2GU-ha-0IK"/>
                         <outlet property="tableView" destination="wHx-pz-szJ" id="D40-fv-OGa"/>
                     </connections>
                 </viewController>
