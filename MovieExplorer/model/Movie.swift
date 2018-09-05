@@ -13,7 +13,7 @@ final class Movie: Codable, Equatable, Hashable {
     var id:Int
     var vote_average :Float
     var title: String
-    var poster_path :String
+    var poster_path :String?
     var backdrop_path: String?
     var overview: String
     var release_date: String
@@ -23,7 +23,7 @@ final class Movie: Codable, Equatable, Hashable {
         self.id = builder.id!
         self.vote_average = builder.vote_average!
         self.title = builder.title!
-        self.poster_path = builder.poster_path!
+        self.poster_path = builder.poster_path
         self.backdrop_path = builder.backdrop_path
         self.overview = builder.overview!
         self.release_date = builder.release_date!
@@ -35,7 +35,7 @@ final class Movie: Codable, Equatable, Hashable {
         try container.encode(self.id, forKey: JsonKeys.id)
         try container.encode(self.vote_average, forKey: JsonKeys.vote_average)
         try container.encode(self.title, forKey: JsonKeys.title)
-        try container.encode(self.poster_path, forKey: JsonKeys.poster_path)
+        try container.encodeIfPresent(self.poster_path, forKey: JsonKeys.poster_path)
         try container.encodeIfPresent(self.backdrop_path, forKey: JsonKeys.backdrop_path)
         try container.encode(self.overview, forKey: JsonKeys.overview)
         try container.encode(self.release_date, forKey: JsonKeys.release_date)
@@ -48,7 +48,7 @@ final class Movie: Codable, Equatable, Hashable {
         self.vote_average  = try values.decode(Float.self, forKey: JsonKeys.vote_average)
         self.title  = try values.decode(String.self, forKey: JsonKeys.title)
         self.backdrop_path  = try values.decodeIfPresent(String.self, forKey: JsonKeys.backdrop_path)
-        self.poster_path  = try values.decode(String.self, forKey: JsonKeys.poster_path)
+        self.poster_path  = try values.decodeIfPresent(String.self, forKey: JsonKeys.poster_path)
         self.overview  = try values.decode(String.self, forKey: JsonKeys.overview)
         self.release_date  = try values.decode(String.self, forKey: JsonKeys.release_date)
         self.genre_ids  = try values.decode([Int].self, forKey: JsonKeys.genre_ids)
@@ -94,7 +94,7 @@ final class Movie: Codable, Equatable, Hashable {
             self.title = title
             return self
         }
-        func poster_path(_ poster_path : String) -> Builder {
+        func poster_path(_ poster_path : String?) -> Builder {
             self.poster_path = poster_path
             return self
         }

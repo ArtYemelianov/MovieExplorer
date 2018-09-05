@@ -165,7 +165,7 @@ extension MovieDao {
             .id(Int(id))
             .vote_average(vote_average)
             .title(title!)
-            .poster_path(poster_path!)
+            .poster_path(poster_path)
             .backdrop_path(backdrop_path)
             .overview(overview!)
             .release_date(release_date!)
