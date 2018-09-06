@@ -14,6 +14,8 @@ let showMovie = "show_movie"
 
 class MovieViewController: UIViewController {
     
+    private var refreshControl =  UIRefreshControl()
+    
     @IBOutlet var collectionView: UICollectionView!
     var genre: Genre? = nil
     private var movies: [Movie] = Array()
@@ -25,21 +27,30 @@ class MovieViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.addSubview( refreshControl)
+        refreshControl.addTarget(self, action: #selector(completed), for: .valueChanged)
         
         let observable : Observable<Resource<[Movie]>> = model.loadData(genre!.id)
         let disposable = observable
             .subscribeOn(AppExecutors.background)
             .observeOn(AppExecutors.main)
-            .subscribe(onNext: {[weak self] item in
-                self?.update(resourse: item)
+            .subscribe(onNext: {item in
+                self.update(resourse: item)
                 }, onError: { error in
-                // download fails
+                    print("Error happens \(error.localizedDescription)")
             }, onCompleted: {
-                // download completed
+                // do nothing
             }, onDisposed: {
-                // operation completed
+                self.refreshControl.endRefreshing()
             })
         disposeBag.insert(disposable)
+        
+        refreshControl.beginRefreshing()
+    }
+    
+    
+    @objc func completed(){
+        refreshControl.endRefreshing()
     }
     
     private func update(resourse : Resource<[Movie]>){

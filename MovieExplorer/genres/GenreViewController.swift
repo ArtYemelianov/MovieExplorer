@@ -11,6 +11,8 @@ import RxSwift
 
 class GenreViewController: UIViewController {
     
+    private var refreshControl =  UIRefreshControl()
+
     @IBOutlet weak var tableView: UITableView!
     private var genres: [Genre] = Array()
     private var filtered: [Genre] = Array()
@@ -29,25 +31,34 @@ class GenreViewController: UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchBar.delegate = self
-        
+
         tableView.dataSource = self
         tableView.delegate = self
+        
+        tableView.addSubview( refreshControl)
+        refreshControl.addTarget(self, action: #selector(completed), for: .valueChanged)
+        
         let observable : Observable<Resource<[Genre]>> = model.loadData()
         let disposable = observable
             .subscribeOn(AppExecutors.background)
             .observeOn(AppExecutors.main)
-            .subscribe(onNext: {[weak self] item in
-                self?.update(resourse: item)
+            .subscribe(onNext: {item in
+                self.update(resourse: item)
             }, onError: { error in
-                
+                print("Error happens \(error.localizedDescription)")
             }, onCompleted: {
-                
+                // do nothing
             }, onDisposed: {
-                
+                self.refreshControl.endRefreshing()
             })
         disposeBag.insert(disposable)
+        
+        refreshControl.beginRefreshing()
     }
     
+    @objc func completed(){
+        refreshControl.endRefreshing()
+    }
     
     private func update(resourse : Resource<[Genre]>){
         if resourse.data != nil {
