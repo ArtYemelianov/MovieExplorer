@@ -29,11 +29,13 @@ class NetworkBoundSources<Element> {
         }
     })
     
-    
     private func start(_ observer : AnyObserver<Resource<E>>){
         observer.onNext(Resource.loading)
         let dataSource = loadFromDatabase()
-        dataSource.subscribe(onNext: { [unowned self] item -> Void in
+        dataSource
+            .subscribeOn(AppExecutors.diskIO)
+            .observeOn(AppExecutors.newThread)
+            .subscribe(onNext: { [unowned self] item -> Void in
             if self.shouldLoadFromNetwork(data: item){
                 self.fetchNetworkData(observer)
             }else{

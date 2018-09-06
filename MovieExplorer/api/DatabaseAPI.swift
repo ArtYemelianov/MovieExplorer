@@ -14,7 +14,7 @@ class DatabaseAPI {
     fileprivate let persistenceManager: PersistenceManager!
     fileprivate var mainContextInstance: NSManagedObjectContext!
     
-    init() {
+    private init() {
         self.persistenceManager = PersistenceManager.sharedInstance
         self.mainContextInstance = persistenceManager.getMainContextInstance()
     }
@@ -58,7 +58,7 @@ class DatabaseAPI {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: EntityTypes.Movie.rawValue)
         do {
             // sort by vote_average fetchRequest.sortDescriptors = [ NSSortDescriptor(key: JsonKeys.name.rawValue, ascending: true)]
-//            let filter = "\(JsonKeys.genre_ids.rawValue) = %@"
+            // let filter = "\(JsonKeys.genre_ids.rawValue) = %@"
             let filter = "\(JsonKeys.genre_ids.rawValue) CONTAINS[cd] %@"
             fetchRequest.predicate = NSPredicate(format: filter, String(genre_id))
             fetchedResults = try self.mainContextInstance.fetch(fetchRequest) as! [MovieDao]

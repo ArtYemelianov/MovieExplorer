@@ -26,7 +26,11 @@ class NetworkBoundSourcesGenre : NetworkBoundSources<[Genre]> {
             print("Error. Genre result is nil ")
             return
         }
-        DatabaseAPI.sharedInstance.saveGenres(data!)
+        RxDatabaseAPI.init().saveObservableGenres(data!)
+            .subscribeOn(AppExecutors.diskIO)
+            .subscribe(onCompleted: {
+                    print("Success for saveNetworkCallResult Genre")
+            })
     }
     
     override func shouldLoadFromNetwork(data: [Genre]?) -> Bool {
@@ -38,8 +42,8 @@ class NetworkBoundSourcesGenre : NetworkBoundSources<[Genre]> {
     
     override func loadFromDatabase() -> Observable<[Genre]> {
         //TODO let array = [Genre(id: 25, name: "TItle"), Genre(id: 25, name: "Avaranges")]
-        let list = DatabaseAPI.sharedInstance.getGenres()
+        let observablelist = RxDatabaseAPI.init().getObservableGenres()
         let observable = Observable<[Genre]>.just(Array())
-        return observable
+        return observablelist
     }
 }

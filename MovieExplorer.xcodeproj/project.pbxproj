@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		453707B02141280400D858DB /* RxDatabaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453707AF2141280400D858DB /* RxDatabaseAPI.swift */; };
 		453D9EE021395D2E0081401D /* AppExecutors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D9EDF21395D2E0081401D /* AppExecutors.swift */; };
 		453D9EE22139642E0081401D /* GenreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D9EE12139642E0081401D /* GenreViewModel.swift */; };
 		453D9EE521396DD40081401D /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D9EE421396DD40081401D /* Resource.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		139C8BED847103174C2FE1B5 /* Pods-MovieExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieExplorer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MovieExplorer/Pods-MovieExplorer.debug.xcconfig"; sourceTree = "<group>"; };
+		453707AF2141280400D858DB /* RxDatabaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxDatabaseAPI.swift; sourceTree = "<group>"; };
 		453D9EDF21395D2E0081401D /* AppExecutors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExecutors.swift; sourceTree = "<group>"; };
 		453D9EE12139642E0081401D /* GenreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreViewModel.swift; sourceTree = "<group>"; };
 		453D9EE421396DD40081401D /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				45D927CD213FF3D1008047D3 /* DatabaseAPI.swift */,
+				453707AF2141280400D858DB /* RxDatabaseAPI.swift */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				453D9EE521396DD40081401D /* Resource.swift in Sources */,
 				4558ABED213D6D3800C25AD6 /* NetworkBoundSourcesGenre.swift in Sources */,
 				4558ABF3213D70FF00C25AD6 /* NetworkBoundSourcesMovie.swift in Sources */,
+				453707B02141280400D858DB /* RxDatabaseAPI.swift in Sources */,
 				45464471213817510001A339 /* GenreTableViewCell.swift in Sources */,
 				453D9EE22139642E0081401D /* GenreViewModel.swift in Sources */,
 				455B3793213EC05300D6500D /* MovieExplorer.xcdatamodeld in Sources */,

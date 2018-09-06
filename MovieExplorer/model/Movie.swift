@@ -113,7 +113,7 @@ final class Movie: Codable, Equatable, Hashable {
         }
         
         func genres_ids(str : String) -> Builder {
-            var str_ids: [String] = str.components(separatedBy: ",")
+            let str_ids: [String] = str.components(separatedBy: ",")
             self.genre_ids = str_ids.map{value in Int(value.trimmingCharacters(in: .whitespaces))!}
             return self
         }

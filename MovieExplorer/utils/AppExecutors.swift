@@ -20,6 +20,10 @@ class AppExecutors{
         // do nothing
     }
     
+    class var newThread: SerialDispatchQueueScheduler{
+        return SerialDispatchQueueScheduler(internalSerialQueueName: "new_thread")
+    }
+    
     class var background: SerialDispatchQueueScheduler{
         if _background == nil {
             _background = SerialDispatchQueueScheduler(internalSerialQueueName: "background_job")

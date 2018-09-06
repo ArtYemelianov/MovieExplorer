@@ -28,7 +28,11 @@ class NetworkBoundSourcesMovie : NetworkBoundSources<[Movie]> {
             print("Error. Movie result is nil ")
             return
         }
-        DatabaseAPI.sharedInstance.saveMovies(data!)
+        RxDatabaseAPI.init().saveObservableMovies(data!)
+            .subscribeOn(AppExecutors.diskIO)
+            .subscribe(onCompleted: {
+                print("Success for saveNetworkCallResult Movie")
+            })
     }
     
     override func shouldLoadFromNetwork(data: [Movie]?) -> Bool {
@@ -39,9 +43,9 @@ class NetworkBoundSourcesMovie : NetworkBoundSources<[Movie]> {
     }
     
     override func loadFromDatabase() -> Observable<[Movie]> {
-        let allmovies = DatabaseAPI.sharedInstance.getMovies()
+        let observableList = RxDatabaseAPI.init().getObservableMovies()
         let movies = DatabaseAPI.sharedInstance.getMovies(genre_id: genre_id)
         let observable = Observable<[Movie]>.just(movies)
-        return observable
+        return observableList
     }
 }
