@@ -18,7 +18,7 @@ class MovieViewController: UIViewController {
     var genre: Genre? = nil
     private var movies: [Movie] = Array()
     private let model: MovieViewModel = MovieViewModel()
-    private let disposeBag = DisposeBag()
+    private let disposeBag  = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,6 @@ class MovieViewController: UIViewController {
             })
         disposeBag.insert(disposable)
     }
-    
     
     private func update(resourse : Resource<[Movie]>){
         if resourse.data != nil && resourse.status == true {
@@ -84,7 +83,7 @@ extension MovieViewController: UICollectionViewDataSource, UICollectionViewDeleg
             item.titleView.text = movie.title
             if movie.backdrop_path != nil {
                 let url = URL(string: Repository.compose_image_url(for: movie.backdrop_path!))
-                item.imageVIew.kf.setImage(with: url,
+                item.imageView.kf.setImage(with: url,
                                            placeholder: nil,
                                            options: [.transition(ImageTransition.fade(1))],
                                            progressBlock: { receivedSize, totalSize in
@@ -100,37 +99,8 @@ extension MovieViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "movie_identifier", for: indexPath)
-        
-        cell.textLabel?.backgroundColor = UIColor.clear
-        cell.detailTextLabel?.backgroundColor = UIColor.clear
-        
-        if indexPath.row % 2 == 0 {
-            cell.backgroundColor = UIColorFromRGB(rgbValue: 0xF0F0F0)
-        } else {
-            cell.backgroundColor = UIColor.clear
-        }
-        
-        let movie  = movies[indexPath.row]
-        if let item = cell as? MovieTableViewCell{
-            item.titleLabel.text = movie.title
-            if movie.backdrop_path != nil {
-                let url = URL(string: Repository.compose_image_url(for: movie.backdrop_path!))
-                item.imageView!.kf.setImage(with: url,
-                                            placeholder: nil,
-                                            options: [.transition(ImageTransition.fade(1))],
-                                            progressBlock: { receivedSize, totalSize in
-                                                print("\(indexPath.row + 1): \(receivedSize)/\(totalSize)")
-                },
-                                            completionHandler: { image, error, cacheType, imageURL in
-                                                print("\(indexPath.row + 1): Finished")
-                })
-            }
-            
-        }
-        return cell
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        (cell as! MovieViewCell).imageView.kf.cancelDownloadTask()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

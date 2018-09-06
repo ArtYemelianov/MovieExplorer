@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class MovieViewModel{
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     public func loadData(_ genreId: Int) -> Observable<Resource<[Movie]>>
     {
@@ -34,5 +34,4 @@ class MovieViewModel{
         })
         return observable
     }
-    
 }

@@ -118,7 +118,7 @@
                                     <constraint firstAttribute="bottom" secondItem="MmK-vt-y9P" secondAttribute="bottom" constant="8" id="pgq-Bs-Jgc"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="imageVIew" destination="MmK-vt-y9P" id="tgq-jy-2cV"/>
+                                    <outlet property="imageView" destination="MmK-vt-y9P" id="tgq-jy-2cV"/>
                                     <outlet property="titleView" destination="ULb-n3-m4H" id="mpw-H6-gyK"/>
                                 </connections>
                             </collectionViewCell>

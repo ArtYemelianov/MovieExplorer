@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class GenreViewModel{
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     public func loadData() -> Observable<Resource<[Genre]>>
     {
@@ -34,7 +34,5 @@ class GenreViewModel{
         })
         return observable
     }
-    
 }
-
 

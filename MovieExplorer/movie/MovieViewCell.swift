@@ -12,5 +12,5 @@ import UIKit
 class MovieViewCell: UICollectionViewCell {
     
     @IBOutlet weak var titleView: UILabel!
-    @IBOutlet weak var imageVIew: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
 }
