@@ -104,18 +104,18 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MmK-vt-y9P">
-                                            <rect key="frame" x="8" y="54" width="254" height="208"/>
+                                            <rect key="frame" x="56" y="54" width="158" height="200"/>
                                         </imageView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="MmK-vt-y9P" secondAttribute="trailing" constant="8" id="4HP-hC-W8h"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="ULb-n3-m4H" secondAttribute="trailing" constant="8" id="4bz-Xj-lRy"/>
-                                    <constraint firstItem="MmK-vt-y9P" firstAttribute="leading" secondItem="GoQ-lK-vQS" secondAttribute="leading" constant="8" id="U2q-Sv-gwv"/>
-                                    <constraint firstItem="MmK-vt-y9P" firstAttribute="top" secondItem="ULb-n3-m4H" secondAttribute="bottom" constant="8" id="UbO-pe-QVc"/>
+                                    <constraint firstItem="MmK-vt-y9P" firstAttribute="leading" secondItem="GoQ-lK-vQS" secondAttribute="leadingMargin" constant="48" id="NG4-cb-zed"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="MmK-vt-y9P" secondAttribute="trailing" constant="48" id="P0s-44-eSi"/>
+                                    <constraint firstItem="MmK-vt-y9P" firstAttribute="top" secondItem="ULb-n3-m4H" secondAttribute="bottom" constant="8" id="TNu-l8-SrW"/>
                                     <constraint firstItem="ULb-n3-m4H" firstAttribute="top" secondItem="GoQ-lK-vQS" secondAttribute="topMargin" constant="8" id="W5N-q1-Q4K"/>
                                     <constraint firstItem="ULb-n3-m4H" firstAttribute="leading" secondItem="GoQ-lK-vQS" secondAttribute="leadingMargin" constant="8" id="hEh-jE-vWR"/>
-                                    <constraint firstAttribute="bottom" secondItem="MmK-vt-y9P" secondAttribute="bottom" constant="8" id="pgq-Bs-Jgc"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="MmK-vt-y9P" secondAttribute="bottom" constant="8" id="mOs-TP-P6S"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="MmK-vt-y9P" id="tgq-jy-2cV"/>
@@ -130,7 +130,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcV-g3-Y8s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1636" y="-1056"/>
+            <point key="canvasLocation" x="1636" y="-1056.5217391304348"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3I7-hE-WyA">

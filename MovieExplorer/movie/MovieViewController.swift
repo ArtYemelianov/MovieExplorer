@@ -33,11 +33,11 @@ class MovieViewController: UIViewController {
             .subscribe(onNext: {[weak self] item in
                 self?.update(resourse: item)
                 }, onError: { error in
-                    
+                // download fails
             }, onCompleted: {
-                
+                // download completed
             }, onDisposed: {
-                
+                // operation completed
             })
         disposeBag.insert(disposable)
     }
