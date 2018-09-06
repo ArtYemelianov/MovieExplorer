@@ -42,7 +42,11 @@ class MovieViewController: UIViewController {
     
     
     private func update(resourse : Resource<[Movie]>){
-        if resourse.data != nil {
+        if resourse.data != nil && resourse.status == true {
+            movies.removeAll()
+            movies.append(contentsOf: resourse.data!)
+            tableView.reloadData()
+        }else if  resourse.data != nil {
             movies.removeAll()
             movies.append(contentsOf: resourse.data!)
             tableView.reloadData()

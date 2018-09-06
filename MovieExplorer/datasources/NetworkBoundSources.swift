@@ -36,21 +36,23 @@ class NetworkBoundSources<Element> {
             .subscribeOn(AppExecutors.diskIO)
             .observeOn(AppExecutors.newThread)
             .subscribe(onNext: { [unowned self] item -> Void in
-            if self.shouldLoadFromNetwork(data: item){
-                self.fetchNetworkData(observer)
-            }else{
-                observer.onNext(Resource<E>.success(data: item))
+                observer.onNext(Resource<E>.storage(data: item))
+                if self.shouldLoadFromNetwork(data: item){
+                    self.fetchNetworkData(observer)
+                    observer.onNext(Resource<E>.success(data: item))
+                    observer.onCompleted()
+                }else{
+                    observer.onCompleted()
+                }
+                }, onError: { error  in
+                    print("NetworkBoundSources::start, onError happens")
+                    observer.onError(error)
+            }, onCompleted: {
+                print("NetworkBoundSources::start, onCompleted")
                 observer.onCompleted()
-            }
-        }, onError: { error  in
-            print("NetworkBoundSources::start, onError happens")
-            observer.onError(error)
-        }, onCompleted: {
-            print("NetworkBoundSources::start, onCompleted")
-            observer.onCompleted()
-        }, onDisposed: {
-            print("NetworkBoundSources::start, onDisposed")
-        })
+            }, onDisposed: {
+                print("NetworkBoundSources::start, onDisposed")
+            })
     }
     
     /**

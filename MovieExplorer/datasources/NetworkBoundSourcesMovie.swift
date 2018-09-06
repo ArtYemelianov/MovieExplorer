@@ -36,16 +36,10 @@ class NetworkBoundSourcesMovie : NetworkBoundSources<[Movie]> {
     }
     
     override func shouldLoadFromNetwork(data: [Movie]?) -> Bool {
-        guard !(data?.isEmpty)! else {
-            return true
-        }
-        return false
+        return true
     }
     
     override func loadFromDatabase() -> Observable<[Movie]> {
-        let observableList = RxDatabaseAPI.init().getObservableMovies()
-        let movies = DatabaseAPI.sharedInstance.getMovies(genre_id: genre_id)
-        let observable = Observable<[Movie]>.just(movies)
-        return observableList
+        return RxDatabaseAPI.init().getObservableMovies(genre_id: genre_id)
     }
 }

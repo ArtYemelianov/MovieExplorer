@@ -58,9 +58,9 @@ class RxDatabaseAPI {
      
      - Parameter movies: Stores list of movies
      */
-    func saveObservableMovies(_ movies: [Movie]) -> Observable<Void>{
+    func saveObservableMovies(_ movies: [Movie], for genre_id: Int = -1) -> Observable<Void>{
         return Observable<Void>.create({ observer -> Disposable in
-            self.api.saveMovies(movies)
+            self.api.saveMovies(movies, for: genre_id)
             observer.onCompleted()
             return Disposables.create {
                 print("DatabaseAPI saveObservableMovies disposed")

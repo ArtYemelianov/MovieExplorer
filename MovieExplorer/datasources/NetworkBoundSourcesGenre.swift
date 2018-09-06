@@ -43,7 +43,6 @@ class NetworkBoundSourcesGenre : NetworkBoundSources<[Genre]> {
     override func loadFromDatabase() -> Observable<[Genre]> {
         //TODO let array = [Genre(id: 25, name: "TItle"), Genre(id: 25, name: "Avaranges")]
         let observablelist = RxDatabaseAPI.init().getObservableGenres()
-        let observable = Observable<[Genre]>.just(Array())
         return observablelist
     }
 }

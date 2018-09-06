@@ -30,6 +30,10 @@ extension Resource {
         }
     }
     
+    static func storage<T>(data : T) -> Resource<T> {
+        return Resource<T>(status: true, data: data, message: nil)
+    }
+    
     static func success<T>(data : T) -> Resource<T> {
         return Resource<T>(status: false, data: data, message: nil)
     }

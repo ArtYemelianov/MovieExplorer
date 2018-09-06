@@ -53,19 +53,18 @@ class DatabaseAPI {
      - Returns: list of movies
      */
     func getMovies(genre_id: Int) -> [Movie] {
+        // TODO gets GenreDao objects and get [Movie], it is better than using predicate
+        
         var fetchedResults: [MovieDao] = Array()
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: EntityTypes.Movie.rawValue)
         do {
-            // sort by vote_average fetchRequest.sortDescriptors = [ NSSortDescriptor(key: JsonKeys.name.rawValue, ascending: true)]
-            // let filter = "\(JsonKeys.genre_ids.rawValue) = %@"
             let filter = "\(JsonKeys.genre_ids.rawValue) CONTAINS[cd] %@"
             fetchRequest.predicate = NSPredicate(format: filter, String(genre_id))
             fetchedResults = try self.mainContextInstance.fetch(fetchRequest) as! [MovieDao]
         } catch let fetchError as NSError {
             print("retrieve single event error: \(fetchError.localizedDescription)")
         }
-        
         return fetchedResults.map{ value in value.toMovie }
     }
     
@@ -88,19 +87,39 @@ class DatabaseAPI {
      Stores movies
      
      - Parameter movies: Stores list of movies
+     - Parameter for: Genre id
      */
-    func saveMovies(_ movies: [Movie]){
+    func saveMovies(_ movies: [Movie], for genre_id: Int = -1){
         let minionManagedObjectContextWorker: NSManagedObjectContext =
             NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
         minionManagedObjectContextWorker.parent = self.mainContextInstance
+        minionManagedObjectContextWorker.parent!.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        let genresDao = self.getGenresDao()
         
         for movie in movies {
-            let item = NSEntityDescription.insertNewObject(forEntityName: EntityTypes.Movie.rawValue, into: minionManagedObjectContextWorker) as! MovieDao
+            let movieEntity = NSEntityDescription.entity(forEntityName: EntityTypes.Movie.rawValue, in: minionManagedObjectContextWorker)!
+            let item = NSManagedObject(entity: movieEntity, insertInto: minionManagedObjectContextWorker) as! MovieDao
             movie.updateMovieDao(item)
-            self.persistenceManager.saveWorkerContext(minionManagedObjectContextWorker)
+            
+            let obligatoryGenres = genresDao.filter({ value in movie.genre_ids.contains(Int(value.id))})
+            self.bindGenresDaoAndMovieDao(movie: item, genres: obligatoryGenres)
         }
-        
+        self.persistenceManager.saveWorkerContext(minionManagedObjectContextWorker)
         self.persistenceManager.mergeWithMainContext()
+    }
+    
+    /**
+     Puts genres to movie
+    */
+    private func bindGenresDaoAndMovieDao(movie: MovieDao, genres: [GenreDao]){
+        let genreSet = movie.mutableSetValue(forKey: "genres")
+        for genre in genres {
+            // TODO genreSet.add(genre)
+            // this snipper of code causes to crash
+            // Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '*** -_referenceData64          only defined for abstract class. Define -[NSTemporaryObjectID_default _referenceData64]!'
+            // this solution is more gracefully then filter movies for genre by predicate
+        }
     }
     
     /**
@@ -124,12 +143,7 @@ class DatabaseAPI {
         self.persistenceManager.mergeWithMainContext()
     }
     
-    /**
-     Retrieves all genre items which are stored
-     
-     - Returns: Array of stored genres
-     */
-    func getGenres() -> [Genre] {
+    private func getGenresDao() -> [GenreDao] {
         var fetchedResults: [GenreDao] = [GenreDao]()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: EntityTypes.Genre.rawValue)
         fetchRequest.sortDescriptors = [ NSSortDescriptor(key: JsonKeys.name.rawValue, ascending: true)]
@@ -141,7 +155,16 @@ class DatabaseAPI {
             fetchedResults = [GenreDao]()
         }
         
-        return fetchedResults.map{ value in Genre(id: Int(value.id), name: value.name!) }
+        return fetchedResults
+    }
+    
+    /**
+     Retrieves all genre items which are stored
+     
+     - Returns: Array of stored genres
+     */
+    func getGenres() -> [Genre] {
+        return getGenresDao().map{ value in Genre(id: Int(value.id), name: value.name!) }
     }
 }
 
