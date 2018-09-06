@@ -7,5 +7,6 @@ target 'MovieExplorer' do
   pod 'RxSwift', '4.1.1'
   pod 'Alamofire', '~> 4.5'
   pod 'SwiftyJSON'
+  pod 'Kingfisher'
 
 end

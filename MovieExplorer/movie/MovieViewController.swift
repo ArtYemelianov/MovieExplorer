@@ -8,22 +8,24 @@
 
 import UIKit
 import RxSwift
+import Kingfisher
 
 let showMovie = "show_movie"
 
 class MovieViewController: UIViewController {
     
+    @IBOutlet var collectionView: UICollectionView!
     var genre: Genre? = nil
-    @IBOutlet weak var tableView: UITableView!
     private var movies: [Movie] = Array()
     private let model: MovieViewModel = MovieViewModel()
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = 44
-        tableView.dataSource = self
-        tableView.delegate = self
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
         let observable : Observable<Resource<[Movie]>> = model.loadData(genre!.id)
         let disposable = observable
             .subscribeOn(AppExecutors.background)
@@ -45,11 +47,11 @@ class MovieViewController: UIViewController {
         if resourse.data != nil && resourse.status == true {
             movies.removeAll()
             movies.append(contentsOf: resourse.data!)
-            tableView.reloadData()
+            collectionView!.reloadData()
         }else if  resourse.data != nil {
             movies.removeAll()
             movies.append(contentsOf: resourse.data!)
-            tableView.reloadData()
+            collectionView.reloadData()
         }else if resourse.message != nil {
             print("Message error \(resourse.message!)")
         }else if resourse.status != nil {
@@ -58,20 +60,46 @@ class MovieViewController: UIViewController {
             print("Error. No one result corresponds on valid")
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
+    
 }
 
 
 
-extension MovieViewController: UITableViewDataSource, UITableViewDelegate {
+extension MovieViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
     }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movie_identifier", for: indexPath)
+        let movie = movies[indexPath.row]
+        if let item = cell as? MovieViewCell{
+            item.titleView.text = movie.title
+            if movie.backdrop_path != nil {
+                let url = URL(string: Repository.compose_image_url(for: movie.backdrop_path!))
+                item.imageVIew.kf.setImage(with: url,
+                                           placeholder: nil,
+                                           options: [.transition(ImageTransition.fade(1))],
+                                           progressBlock: { receivedSize, totalSize in
+                                            print("\(indexPath.row + 1): \(receivedSize)/\(totalSize)")
+                },
+                                           completionHandler: { image, error, cacheType, imageURL in
+                                            print("\(indexPath.row + 1): Finished")
+                })
+            }
+            
+        }
+        return cell
+    }
+    
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "movie_identifier", for: indexPath)
@@ -88,6 +116,19 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate {
         let movie  = movies[indexPath.row]
         if let item = cell as? MovieTableViewCell{
             item.titleLabel.text = movie.title
+            if movie.backdrop_path != nil {
+                let url = URL(string: Repository.compose_image_url(for: movie.backdrop_path!))
+                item.imageView!.kf.setImage(with: url,
+                                            placeholder: nil,
+                                            options: [.transition(ImageTransition.fade(1))],
+                                            progressBlock: { receivedSize, totalSize in
+                                                print("\(indexPath.row + 1): \(receivedSize)/\(totalSize)")
+                },
+                                            completionHandler: { image, error, cacheType, imageURL in
+                                                print("\(indexPath.row + 1): Finished")
+                })
+            }
+            
         }
         return cell
     }
@@ -106,4 +147,8 @@ extension MovieViewController {
             alpha: CGFloat(1.0)
         )
     }
+}
+
+extension MovieViewController {
+    
 }

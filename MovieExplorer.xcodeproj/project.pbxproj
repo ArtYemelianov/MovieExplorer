@@ -30,9 +30,9 @@
 		4558ABEF213D6DB800C25AD6 /* MovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558ABEE213D6DB800C25AD6 /* MovieResponse.swift */; };
 		4558ABF1213D6DDA00C25AD6 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558ABF0213D6DDA00C25AD6 /* Movie.swift */; };
 		4558ABF3213D70FF00C25AD6 /* NetworkBoundSourcesMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558ABF2213D70FF00C25AD6 /* NetworkBoundSourcesMovie.swift */; };
-		4558ABF5213D737600C25AD6 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558ABF4213D737600C25AD6 /* MovieTableViewCell.swift */; };
 		4558ABF7213D738500C25AD6 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4558ABF6213D738500C25AD6 /* MovieViewModel.swift */; };
 		455B3793213EC05300D6500D /* MovieExplorer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 455B3791213EC05300D6500D /* MovieExplorer.xcdatamodeld */; };
+		456A84E821418338002A85AB /* MovieViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A84E721418338002A85AB /* MovieViewCell.swift */; };
 		45D927C0213FE40E008047D3 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D927BF213FE40E008047D3 /* CoreDataStack.swift */; };
 		45D927CA213FF091008047D3 /* ContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D927C7213FF091008047D3 /* ContextManager.swift */; };
 		45D927CB213FF091008047D3 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D927C8213FF091008047D3 /* PersistenceManager.swift */; };
@@ -69,9 +69,9 @@
 		4558ABEE213D6DB800C25AD6 /* MovieResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResponse.swift; sourceTree = "<group>"; };
 		4558ABF0213D6DDA00C25AD6 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		4558ABF2213D70FF00C25AD6 /* NetworkBoundSourcesMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkBoundSourcesMovie.swift; sourceTree = "<group>"; };
-		4558ABF4213D737600C25AD6 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		4558ABF6213D738500C25AD6 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		455B3792213EC05300D6500D /* MovieExplorer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieExplorer.xcdatamodel; sourceTree = "<group>"; };
+		456A84E721418338002A85AB /* MovieViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewCell.swift; sourceTree = "<group>"; };
 		45D927BF213FE40E008047D3 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		45D927C7213FF091008047D3 /* ContextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextManager.swift; sourceTree = "<group>"; };
 		45D927C8213FF091008047D3 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
@@ -207,8 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				45464474213818BA0001A339 /* MovieViewController.swift */,
-				4558ABF4213D737600C25AD6 /* MovieTableViewCell.swift */,
 				4558ABF6213D738500C25AD6 /* MovieViewModel.swift */,
+				456A84E721418338002A85AB /* MovieViewCell.swift */,
 			);
 			path = movie;
 			sourceTree = "<group>";
@@ -310,12 +310,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MovieExplorer/Pods-MovieExplorer-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -352,7 +354,6 @@
 				4558ABF1213D6DDA00C25AD6 /* Movie.swift in Sources */,
 				45D927CB213FF091008047D3 /* PersistenceManager.swift in Sources */,
 				453D9EE7213975850081401D /* NetworkService.swift in Sources */,
-				4558ABF5213D737600C25AD6 /* MovieTableViewCell.swift in Sources */,
 				453D9EE021395D2E0081401D /* AppExecutors.swift in Sources */,
 				4546446E213816DF0001A339 /* GenreViewController.swift in Sources */,
 				45464459213809ED0001A339 /* ViewController.swift in Sources */,
@@ -366,6 +367,7 @@
 				45464457213809ED0001A339 /* AppDelegate.swift in Sources */,
 				45D927D0213FF4FE008047D3 /* EntityTypes.swift in Sources */,
 				453D9EEA2139786A0081401D /* AppKeys.swift in Sources */,
+				456A84E821418338002A85AB /* MovieViewCell.swift in Sources */,
 				453D9EF42139804F0081401D /* JsonKeys.swift in Sources */,
 				45D927CA213FF091008047D3 /* ContextManager.swift in Sources */,
 				453D9EF82139869F0081401D /* NetworkBoundSources.swift in Sources */,
